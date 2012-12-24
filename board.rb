@@ -38,6 +38,7 @@ def win_condition_column(board,current_player)
   end
 end
 
+# checks to see if a player has won through diagonal occupation. unfortunately messy
 def win_condition_diagonal(board,current_player)
   diagonal1 = []
   diagonal2 = []
@@ -50,6 +51,15 @@ def win_condition_diagonal(board,current_player)
     end
   end
 end
+
+def stalemate_check(board)
+  taken_places = board.flatten
+  taken_places.collect! {|y| y.to_i}
+  if taken_places.inject(:+) == 0
+    @stalemate = true
+  end
+end
+
 # shows the board in its current state
 def show_board(board)
   puts "    " + board[0].join("   |   ")
@@ -97,6 +107,7 @@ end
 @winner = false
 show_board(board)
 @current_player = player2 # unfortunate artifact of hackish player cycling
+@stalemate = false
 
 # the game loop, will continue until win condition is met
 while @winner == false
@@ -118,8 +129,13 @@ while @winner == false
   win_condition_row(board,@current_player)
   win_condition_column(board,@current_player)
   win_condition_diagonal(board,@current_player)
+  stalemate_check(board)
   if @winner == true
     puts "#{@current_player} has won the game."
+  end
+  if @stalemate == true
+    puts "The game ended in a stalemate."
+    @winner = true
   end
 end
 
