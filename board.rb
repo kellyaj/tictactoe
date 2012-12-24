@@ -93,15 +93,22 @@ end
 
 # validation that a space is not taken already
 def occupied_check(board,pos)
-  row = (pos - 1) / 3
-  column = (pos - 1) % 3
-  if board[row][column] == "X" || board[row][column] == "O"
-    @valid_move = false
-    puts "choose again, that place is occupied"
+  possible_choices = board.flatten
+  if possible_choices.include?(pos.to_s) == true
+    row = (pos - 1) / 3
+    column = (pos - 1) % 3
+    if board[row][column] == "X" || board[row][column] == "O"
+      @valid_move = false
+      puts "choose again, that place is occupied"
+    else
+      @valid_move = true
+    end
   else
-    @valid_move = true
+    @valid_move = false
+    puts "That is not a valid choice, try again"
   end
 end
+
 
 # initialization stuff
 @winner = false
