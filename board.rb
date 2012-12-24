@@ -45,16 +45,20 @@ def initial_board
 	[7, 8, 9]
 	]
 
-	puts board[0].join(" __|__ ")
-	puts board[1].join(" __|__ ")
-	puts board[2].join("   |   ")
+	puts "    " + board[0].join("   |   ")
+  puts "   " + "-------------------"
+	puts "    " + board[1].join("   |   ")
+  puts "   " + "-------------------"
+	puts "    " + board[2].join("   |   ")
 end
 
 # shows the board in its current state
 def show_board(board)
-  puts board[0].join(" __|__ ")
-  puts board[1].join(" __|__ ")
-  puts board[2].join("   |   ")
+  puts "    " + board[0].join("   |   ")
+  puts "   " + "-------------------"
+  puts "    " + board[1].join("   |   ")
+  puts "   " + "-------------------"
+  puts "    " + board[2].join("   |   ")
 end
 
 
