@@ -20,7 +20,7 @@ def win_condition_row(board,current_player)
   end
 end
 
-# checks to see if a player has won through column occupation
+# checks to see if a player has won through column occupation. unfortunately messy
 def win_condition_column(board,current_player)
   column1 = []
   column2 = []
@@ -36,20 +36,6 @@ def win_condition_column(board,current_player)
       @winner = true
     end
   end
-end
-
-def initial_board
-	board = [
-	[1, 2, 3], 
-	[4, 5, 6], 
-	[7, 8, 9]
-	]
-
-	puts "    " + board[0].join("   |   ")
-  puts "   " + "-------------------"
-	puts "    " + board[1].join("   |   ")
-  puts "   " + "-------------------"
-	puts "    " + board[2].join("   |   ")
 end
 
 # shows the board in its current state
@@ -97,7 +83,7 @@ end
 
 # initialization stuff
 @winner = false
-initial_board
+show_board(board)
 @current_player = player2
 
 # the game loop, will continue until win condition is met
