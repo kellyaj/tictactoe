@@ -11,6 +11,7 @@ board = [
 # need a way to express the columns and diagonals
 @winner_array = [true, true, true]
 
+# checks to see if a player has won through row occupation
 def win_condition_row(board,current_player)
   board.each do |board|
     if board.collect { |w| w == current_player} == @winner_array
@@ -19,8 +20,22 @@ def win_condition_row(board,current_player)
   end
 end
 
+# checks to see if a player has won through column occupation
 def win_condition_column(board,current_player)
-
+  column1 = []
+  column2 = []
+  column3 = []
+  columns = [column1, column2, column3]
+  board.each do |board|
+    column1 << board.first
+    column2 << board[1]
+    column3 << board.last
+  end
+  columns.each do |column|
+    if column.collect {|w| w == current_player} == @winner_array
+      @winner = true
+    end
+  end
 end
 
 def initial_board
@@ -68,7 +83,6 @@ end
 def occupied_check(board,pos)
   row = (pos - 1) / 3
   column = (pos - 1) % 3
-
   if board[row][column] == "X" || board[row][column] == "O"
     @valid_move = false
     puts "choose again, that place is occupied"
