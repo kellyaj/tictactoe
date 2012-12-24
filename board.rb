@@ -32,12 +32,24 @@ def win_condition_column(board,current_player)
     column3 << board.last
   end
   columns.each do |column|
-    if column.collect {|w| w == current_player} == @winner_array
+    if column.collect { |w| w == current_player} == @winner_array
       @winner = true
     end
   end
 end
 
+def win_condition_diagonal(board,current_player)
+  diagonal1 = []
+  diagonal2 = []
+  diagonals = [diagonal1, diagonal2]
+  diagonal1 << board[0][0] << board[1][1] << board[2][2]
+  diagonal2 << board[0][2] << board[1][1] << board[2][0]
+  diagonals.each do |diagonal|
+    if diagonal.collect { |w| w == current_player} == @winner_array
+      @winner = true
+    end
+  end
+end
 # shows the board in its current state
 def show_board(board)
   puts "    " + board[0].join("   |   ")
@@ -84,7 +96,7 @@ end
 # initialization stuff
 @winner = false
 show_board(board)
-@current_player = player2
+@current_player = player2 # unfortunate artifact of hackish player cycling
 
 # the game loop, will continue until win condition is met
 while @winner == false
@@ -105,6 +117,7 @@ while @winner == false
   # checking if game is over
   win_condition_row(board,@current_player)
   win_condition_column(board,@current_player)
+  win_condition_diagonal(board,@current_player)
   if @winner == true
     puts "#{@current_player} has won the game."
   end
