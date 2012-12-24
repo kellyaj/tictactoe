@@ -22,9 +22,15 @@ win_conditions = [ board[0], board[1], board[2], column1, column2, column3, [1,5
 player1_wins = ["X", "X", "X"]
 player2_wins = ["O", "O", "O"]
 current_player_wins = [@current_player, @current_player, @current_player]
-winner = false
 
+@winner_array = [true, true, true]
 
+def win_condition_row(board,current_player)
+  a = [true, true, true]
+  if board[0].collect { |w| w == current_player} == a 
+    @winner = true
+  end
+end
 
 def initial_board
 	board = [
@@ -69,18 +75,20 @@ end
 
 
 # the game loop, will continue until win condition is met
+@winner = false
 initial_board
 @current_player = player2
-while winner == false
+while @winner == false
   cycle_players(@current_player)
   puts "Please choose a numbered space to occupy"
   choice = gets.chomp
   place_player_mark(board,choice.to_i,@current_player)
   show_board(board)
-  if win_conditions.include? player1_wins || player2_wins
-      winner = true
-      puts "The game is over, #{@current_player} has won."
-  end
+  # if win_conditions.include? player1_wins || player2_wins
+  #     winner = true
+  #     puts "The game is over, #{@current_player} has won."
+  # end
+  win_condition_row(board,@current_player)
 end
 
 
