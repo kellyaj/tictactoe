@@ -26,8 +26,7 @@ current_player_wins = [@current_player, @current_player, @current_player]
 @winner_array = [true, true, true]
 
 def win_condition_row(board,current_player)
-  a = [true, true, true]
-  if board[0].collect { |w| w == current_player} == a 
+  if board[0].collect { |w| w == current_player} == @winner_array
     @winner = true
   end
 end
