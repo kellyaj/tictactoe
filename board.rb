@@ -16,17 +16,9 @@ def win_condition_row(board,current_player)
   end
 end
 
-# checks to see if a player has won through column occupation. unfortunately messy
+# checks to see if a player has won through column occupation.
 def win_condition_column(board,current_player)
-  column1 = []
-  column2 = []
-  column3 = []
-  columns = [column1, column2, column3]
-  board.each do |board|
-    column1 << board.first
-    column2 << board[1]
-    column3 << board.last
-  end
+  columns = board.transpose
   columns.each do |column|
     if column.all? { |w| w == current_player}
       @winner = true
@@ -34,18 +26,19 @@ def win_condition_column(board,current_player)
   end
 end
 
-# checks to see if a player has won through diagonal occupation. unfortunately messy
-def win_condition_diagonal(board,current_player)
-  diagonal1 = []
-  diagonal2 = []
-  diagonals = [diagonal1, diagonal2]
-  diagonal1 << board[0][0] << board[1][1] << board[2][2]
-  diagonal2 << board[0][2] << board[1][1] << board[2][0]
-  diagonals.each do |diagonal|
-    if diagonal.all? { |w| w == current_player}
-      @winner = true
-    end
+# checks to see if a player has won through diagonal occupation. unfortunately split up
+def win_condition_diagonal_ltr(board,current_player)
+  for i in (0..2) do
+    return false if board[i][i] != current_player
   end
+  return @winner = true
+end
+
+def win_condition_diagonal_rtl(board,current_player)
+  for i in (0..2) do
+    return false if board[i][-(i+1)] != current_player
+  end
+  return @winner = true
 end
 
 # checks to see if the game has ended in a stalemate. unfortunately force entire board to be full
@@ -54,6 +47,23 @@ def stalemate_check(board)
   taken_places.collect! {|y| y.to_i}
   if taken_places.inject(:+) == 0
     @stalemate = true
+  end
+end
+
+# checks to see if the game is over through win conditions or stalemate
+def game_over_check(board,current_player)
+  win_condition_row(board,@current_player)
+  win_condition_column(board,@current_player)
+  win_condition_diagonal_ltr(board,@current_player)
+  win_condition_diagonal_rtl(board,@current_player)
+  stalemate_check(board)
+
+  if @winner == true
+    puts "#{@current_player} has won the game."
+  end
+  if @stalemate == true
+    puts "The game ended in a stalemate."
+    @winner = true
   end
 end
 
@@ -130,20 +140,9 @@ while @winner == false
   show_board(board)
 
   # checking if game is over
-  win_condition_row(board,@current_player)
-  win_condition_column(board,@current_player)
-  win_condition_diagonal(board,@current_player)
-  stalemate_check(board)
-  if @winner == true
-    puts "#{@current_player} has won the game."
-  end
-  if @stalemate == true
-    puts "The game ended in a stalemate."
-    @winner = true
-  end
+  game_over_check(board,@current_player)
 end
 
 
-
+# more stuff for later:
 # choose size of tictactoe -- length * width is chosen (not just 3 * 3)
-# board.all? { |w| w == current_player}
