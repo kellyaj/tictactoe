@@ -7,14 +7,10 @@ board = [
 	["7", "8", "9"] 
 ]
 
-
-# need a way to express the columns and diagonals
-@winner_array = [true, true, true]
-
 # checks to see if a player has won through row occupation
 def win_condition_row(board,current_player)
   board.each do |board|
-    if board.collect { |w| w == current_player} == @winner_array
+    if board.all? { |w| w == current_player} 
       @winner = true
     end
   end
@@ -32,7 +28,7 @@ def win_condition_column(board,current_player)
     column3 << board.last
   end
   columns.each do |column|
-    if column.collect { |w| w == current_player} == @winner_array
+    if column.all? { |w| w == current_player}
       @winner = true
     end
   end
@@ -46,12 +42,13 @@ def win_condition_diagonal(board,current_player)
   diagonal1 << board[0][0] << board[1][1] << board[2][2]
   diagonal2 << board[0][2] << board[1][1] << board[2][0]
   diagonals.each do |diagonal|
-    if diagonal.collect { |w| w == current_player} == @winner_array
+    if diagonal.all? { |w| w == current_player}
       @winner = true
     end
   end
 end
 
+# checks to see if the game has ended in a stalemate. unfortunately force entire board to be full
 def stalemate_check(board)
   taken_places = board.flatten
   taken_places.collect! {|y| y.to_i}
@@ -91,7 +88,7 @@ def cycle_players(current_player)
   return @current_player
 end
 
-# validation that a space is not taken already
+# validates choice is possible and that a space is not taken already
 def occupied_check(board,pos)
   possible_choices = board.flatten
   if possible_choices.include?(pos.to_s) == true
@@ -149,3 +146,4 @@ end
 
 
 # choose size of tictactoe -- length * width is chosen (not just 3 * 3)
+# board.all? { |w| w == current_player}
