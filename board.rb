@@ -52,10 +52,10 @@ end
 
 # checks to see if the game is over through win conditions or stalemate
 def game_over_check(board,current_player)
-  win_condition_row(board,@current_player)
-  win_condition_column(board,@current_player)
-  win_condition_diagonal_ltr(board,@current_player)
-  win_condition_diagonal_rtl(board,@current_player)
+  win_condition_row(board,current_player)
+  win_condition_column(board,current_player)
+  win_condition_diagonal_ltr(board,current_player)
+  win_condition_diagonal_rtl(board,current_player)
   stalemate_check(board)
 
   if @winner == true
@@ -120,7 +120,7 @@ end
 # initialization stuff
 @winner = false
 show_board(board)
-@current_player = player2 # unfortunate artifact of hackish player cycling
+@current_player = player2 # unfortunate necessity of hackish player cycling
 @stalemate = false
 
 # the game loop, will continue until win condition is met
@@ -142,6 +142,9 @@ while @winner == false
   # checking if game is over
   game_over_check(board,@current_player)
 end
+
+
+
 
 # additional cleaning to be done:
 # fix the cycling of players
