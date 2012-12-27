@@ -143,6 +143,14 @@ while @winner == false
   game_over_check(board,@current_player)
 end
 
+# additional cleaning to be done:
+# fix the cycling of players
+# merge diagonal win check?
+# 
 
 # more stuff for later:
+# separation
+#    initializers, board, players, win conditions, game itself
 # choose size of tictactoe -- length * width is chosen (not just 3 * 3)
+# stalemate detection, instead of forcing all locations to be occupied
+# computer AI
